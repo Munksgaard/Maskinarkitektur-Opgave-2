@@ -30,7 +30,7 @@ L1:	slt	$t0, $s0, $s3		# t0 = i < n?
 	j	L1
 
 L1_exit:	
-
+	j exit
 
 mul:
 	addu	$t0, $0, $0
