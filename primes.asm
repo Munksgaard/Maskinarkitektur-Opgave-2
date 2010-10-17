@@ -35,14 +35,14 @@ L1:	slt	$t0, $s0, $s3		# t0 = i < n?
 	j	L1
 
 L1_exit:
-	addiu 	$registerp, $0, 2	# Initialiser p=2
-L2:	addu	$a0, $registerp, $0	# Gør klar til at gange p med sig selv
+	addiu 	$s1, $0, 2	# Initialiser p=2
+L2:	addu	$a0, $s1, $0	# Gør klar til at gange p med sig selv
 	addu	$a0, $a0, $0
 	jal 	mul			# v0 = p*p
 	slt	$t0, $v0, $s3		# Sæt t0 til 1 hvis p*p er mindre end n
 	beq 	$t0, $0, L2_exit	# Hvis p*p ikke er mindre end n, forlad løkke
 	
-	addu 	$a0, $registerp, $0	# Gør klar til at gange p med 4 (offset ind i primes)
+	addu 	$a0, $s1, $0	# Gør klar til at gange p med 4 (offset ind i primes)
 	addiu	$a1, $0, 4		
 	jal 	mul			# v0 = p*4
 	lw	$t0, $v0($s4)		# t0 = primes[p]
@@ -51,14 +51,14 @@ L2:	addu	$a0, $registerp, $0	# Gør klar til at gange p med sig selv
 	addiu	$s0, $0, 2		# i = 2
 
 W1:	addu	$a0, $s0, $0		# Gør klar til at gange i med p. a0 = i
-	addu	$a1, $registerp, $0	# a1 = p
+	addu	$a1, $s1, $0	# a1 = p
 	jal	mul				# v0 = i*p
-	addu	$registeridx, $v0, $0	# idx = i*p
+	addu	$s2, $v0, $0	# idx = i*p
 
-	slt	$t0, $registeridx, $s3	# t0 = idx < n
+	slt	$t0, $s2, $s3	# t0 = idx < n
 	beq	$t0, $0, W1_break	# break hvis idx ikke er < n, altså idx >= n
 
-	addu 	$a0, $registeridx, $0	# gør kar til at gange idx med 4 (offset ind i primes)
+	addu 	$a0, $s2, $0	# gør kar til at gange idx med 4 (offset ind i primes)
 	addiu	$a1, $0, 4
 	jal 	mul			# v0 = p*4
 	sw	$0, $v0($s4)		# primes[idx] = 0
