@@ -1,7 +1,7 @@
 main:	addiu 	$a0, $0, 28		# gør argumentet klar
 	jal 	largest_prime		# largest_prime(28)
 	
-	addu	$v0, $0, $0 		# return 0
+	addu	#$v0, $0, $0 		# return 0
 	j 	end
 
 largest_prime:	
@@ -29,7 +29,7 @@ L1:	slt	$t0, $s0, $s3		# t0 = i < n?
 	jal	mul
 	addu	$t0, $v0, $s4
 
-	sw 	$s0, ($t0)		# gem i i primes[i]
+	sw 	$s0, 0($t0)		# gem i i primes[i]
 
 	addiu	$s0, $s0, 1		# forøg i med 1
 	j	L1
@@ -46,7 +46,7 @@ L2:	addu	$a0, $s1, $0		# Gør klar til at gange p med sig selv
 	addiu	$a1, $0, 4		
 	jal 	mul			# v0 = p*4
 	addu	$t1, $v0, $s4		# t1 = offset i primes til p. primes + p*4
-	lw	$t0, ($t1)		# t0 = primes[p]
+	lw	$t0, 0($t1)		# t0 = primes[p]
 	beq	$t0, $0, L2_continue	# spring videre hvis primes[p] = 0
 
 	addiu	$s0, $0, 2		# i = 2
@@ -63,7 +63,7 @@ W1:	addu	$a0, $s0, $0		# Gør klar til at gange i med p. a0 = i
 	addiu	$a1, $0, 4
 	jal 	mul			# v0 = p*4
 	addu	$t0, $v0, $s4		# t0 = primes + idx*4 = positionen af primes[idx]
-	sw	$0, ($t0)		# primes[idx] = 0
+	sw	$0, 0($t0)		# primes[idx] = 0
 
 	addiu	$s0, $s0, 1		# i++
 
@@ -86,7 +86,7 @@ L3:	addiu	$s0, $s0, -1		# i = i - 1
 	addiu	$a1, $0, 4		# a1 = 4
 	jal 	mul			# v0 = i*4
 	addu	$t1, $v0, $s4		# t1 = i*4 + primes = positionen af primes[i]
-	lw	$t0, ($t1)		# t0 = primes[i]
+	lw	$t0, 0($t1)		# t0 = primes[i]
 	beq	$t0, $0, L3		# Hvis primes[i] er nul, loop igen
 
 	j	largest_prime_exit	# return i
