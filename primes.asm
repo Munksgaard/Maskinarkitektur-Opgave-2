@@ -1,7 +1,7 @@
 main:	addiu 	$a0, $0, 28		# gør argumentet klar
 	jal 	largest_prime		# largest_prime(28)
 	
-	addu	#$v0, $0, $0 		# return 0
+	addu	$v0, $0, $0 		# return 0
 	j 	end
 
 largest_prime:	
